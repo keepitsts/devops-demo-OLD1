@@ -5,7 +5,7 @@ node {
         checkout scm
     }
 
-    docker.image('jhipster/jhipster:v6.0.0').inside('-u jhipster -e GRADLE_USER_HOME=.gradle') {
+    gitlabCommitStatus('build') {
         stage('check java') {
             sh "java -version"
         }
@@ -44,18 +44,5 @@ node {
             archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
         }
 
-    }
-
-    def dockerImage
-    stage('build docker') {
-        sh "cp -R src/main/docker build/"
-        sh "cp build/libs/*.jar build/docker/"
-        dockerImage = docker.build('bdealey/store', 'build/docker')
-    }
-
-    stage('publish docker') {
-        docker.withRegistry('https://registry.hub.docker.com', 'bdealey') {
-            dockerImage.push 'latest'
-        }
     }
 }
