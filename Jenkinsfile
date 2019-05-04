@@ -40,14 +40,14 @@ node {
 
     stage('packaging') {
         sh "./gradlew bootJar -x test -Pprod -PnodeInstall --no-daemon"
-        archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
+        archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
     }
 
 
     def dockerImage
     stage('build docker') {
         sh "cp -R src/main/docker build/"
-        sh "cp build/libs/*.jar build/docker/"
+        sh "cp build/libs/*.war build/docker/"
         dockerImage = docker.build('bdealey/store', 'build/docker')
     }
 
