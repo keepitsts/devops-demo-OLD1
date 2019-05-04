@@ -17,5 +17,5 @@ ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 8080
 
-ADD *.war app.war
-
+#WPD ADD *.war app.war
+ADD target/*.war /jhipster-registry.war
