@@ -47,7 +47,7 @@ node {
     def dockerImage
     stage('build docker') {
         sh "cp -R src/main/docker build/"
-        sh "cp build/libs/*.war build/docker/"
+        sh "cp build/libs/*.jar build/docker/"
         dockerImage = docker.build('bdealey/store', 'build/docker')
     }
 
